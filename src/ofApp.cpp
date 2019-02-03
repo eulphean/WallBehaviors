@@ -78,8 +78,17 @@ void ofApp::draw(){
     for (auto r : rectangles) {
       ofFill();
       SoundData * data = (SoundData*)r->getData();
-      if(data && data->bHit) ofSetHexColor(0xff0000);
-      else ofSetColor(ofColor::blue);
+      if (data) {
+        if (data->bHit) {
+          ofSetHexColor(0xff0000);
+        } else {
+          ofSetColor(ofColor::blue);
+        }
+        
+        float rotation = data->rotation;
+        r->setRotation(rotation);
+      }
+      
       r->draw();
     }
   }
@@ -148,6 +157,19 @@ void ofApp::createObstructions() {
   sd = (SoundData*)c->getData();
   sd->soundID = -1;
   sd->bHit = false;
+  rectangles.push_back(c);
+  
+  // Some panel
+  glm::vec2 panelPos = glm::vec2(bounds.x + 200, bounds.y + 200);
+  ofRectangle panel = ofRectangle(panelPos, 75, 20);
+  c = std::make_shared<ofxBox2dRect>();
+  c->setPhysics(0.0, 0.7, 0.1); // Density, bounce, and friction.
+  c->setup(box2d.getWorld(), panel);
+  c->setData(new SoundData());
+  sd = (SoundData*)c->getData();
+  sd->soundID = -1;
+  sd->bHit = false;
+  sd->rotation = 55; // Degrees
   rectangles.push_back(c);
 }
 

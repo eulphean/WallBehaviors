@@ -11,4 +11,5 @@ public:
 
     int soundID = -1;
     bool bHit = false;
+    float rotation = 0; 
 };

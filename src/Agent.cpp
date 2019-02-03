@@ -7,7 +7,7 @@ Agent::Agent(ofxBox2d * box2d, glm::vec2 pos, int soundId, ofTexture t) {
   float rad = ofRandom(35, 40);
 
   // Physics
-  obj->setPhysics(5.0, 1.0, 0.3); // Density, bounce, and friction.
+  obj->setPhysics(5.0, 1.0, 0.1); // Density, bounce, and friction.
   // Setup
   obj->setup(box2d->getWorld(), pos.x, pos.y, rad);
   // Sound data
@@ -21,7 +21,7 @@ Agent::Agent(ofxBox2d * box2d, glm::vec2 pos, int soundId, ofTexture t) {
 }
 
 void Agent::update() {
-  obj->addForce(glm::vec2(ofRandom(-25, 25), ofRandom(-25, 25)), 6.0);
+  obj->addForce(glm::vec2(ofRandom(-25, 25), ofRandom(-25, 25)), 9.0);
   auto pos = obj->getPosition();
   vertices.push_back({pos.x, pos.y, 0});
   // line.addVertices(vertices);
