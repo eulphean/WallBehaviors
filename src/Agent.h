@@ -6,9 +6,10 @@
 class Agent {
 
 	public:
-    Agent(ofxBox2d * box2d, glm::vec2 bounds, int soundId);
+    Agent(ofxBox2d * box2d, glm::vec2 bounds, int soundId, ofTexture tex);
     SoundData* getData();
-    
+    ofTexture tex; 
+  
 		void update();
 		void draw();
   

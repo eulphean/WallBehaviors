@@ -41,4 +41,7 @@ class ofApp : public ofBaseApp{
     void contactEnd(ofxBox2dContactArgs &e);
   
     ofPolyline line;
+  
+    // Array of textures. 
+    std::vector<ofTexture> textures;
 };

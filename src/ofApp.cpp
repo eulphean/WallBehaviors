@@ -41,6 +41,15 @@ void ofApp::setup(){
   // Contact start and contact end
   ofAddListener(box2d.contactStartEvents, this, &ofApp::contactStart);
   ofAddListener(box2d.contactEndEvents, this, &ofApp::contactEnd);
+  
+  // Load image
+  ofTexture t;
+//  ofLoadImage(t, "smile.png"); textures.push_back(t);
+  ofLoadImage(t, "p1.png"); textures.push_back(t);
+  ofLoadImage(t, "p2.png"); textures.push_back(t);
+  ofLoadImage(t, "p3.png"); textures.push_back(t);
+  ofLoadImage(t, "p4.png"); textures.push_back(t);
+  ofLoadImage(t, "p5.png"); textures.push_back(t);
 }
 
 //--------------------------------------------------------------
@@ -80,7 +89,7 @@ void ofApp::draw(){
     ofFill();
     SoundData * data = a.getData();
     if(data && data->bHit) ofSetHexColor(0xff0000);
-    else ofSetColor(ofColor::maroon);
+    else ofSetColor(ofColor::white);
     a.draw();
   }
 }
@@ -90,7 +99,8 @@ void ofApp::createAgents() {
   for (int i = 0; i < numAgents; i++) {
     glm::vec2 pos = glm::vec2(bounds.x + ofRandom(bounds.width), bounds.y);
     int soundId = ofRandom(0, sounds.size());
-    Agent agent(&box2d, pos, soundId);
+    int texId = ofRandom(0, textures.size());
+    Agent agent(&box2d, pos, soundId, textures[texId]);
     agents.push_back(agent);
   }
 }
