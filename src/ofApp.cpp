@@ -50,6 +50,7 @@ void ofApp::setup(){
   ofLoadImage(t, "p3.png"); textures.push_back(t);
   ofLoadImage(t, "p4.png"); textures.push_back(t);
   ofLoadImage(t, "p5.png"); textures.push_back(t);
+  ofLoadImage(t, "p6.png"); textures.push_back(t);
 }
 
 //--------------------------------------------------------------
