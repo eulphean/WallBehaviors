@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "Agent.h"
+#include "ofxFaceTracker2.h"
 
 class ofApp : public ofBaseApp{
 
@@ -11,11 +12,12 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
   
-    void createAgents();
+    void createAgent();
     void createObstructions();
   
     // Flags
     bool hideObstructions;
+    bool grabberDebug; 
     
 		void keyPressed(int key);
   
@@ -25,7 +27,6 @@ class ofApp : public ofBaseApp{
     ofxBox2d box2d;
   
     // Agents.
-    int numAgents;
     std::vector<Agent> agents;
   
     // Obstructions
@@ -40,8 +41,16 @@ class ofApp : public ofBaseApp{
     void contactPostSolve(ofxBox2dPostSolveArgs& e);
     void contactEnd(ofxBox2dContactArgs &e);
   
-    ofPolyline line;
-  
     // Array of textures. 
     std::vector<ofTexture> textures;
+  
+    // Camera
+    ofVideoGrabber grabber;
+    ofxFaceTracker2 tracker;
+    std::vector<ofRectangle> boundingBoxes;
+    ofPixels crop;
+    ofImage dst; 
+  
+    bool takeSnapshot;
+    ofFbo masker; 
 };

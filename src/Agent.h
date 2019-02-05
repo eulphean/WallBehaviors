@@ -6,16 +6,15 @@
 class Agent {
 
 	public:
-    Agent(ofxBox2d * box2d, glm::vec2 bounds, int soundId, ofTexture tex);
+    Agent(ofxBox2d * box2d, glm::vec2 bounds, int soundId, ofImage img);
     SoundData* getData();
-    ofTexture tex; 
+    ofImage agentImg;
+    ofFbo masker; 
   
 		void update();
 		void draw();
   
     // Box2D object. 
     std::shared_ptr<ofxBox2dCircle> obj;
-    std::vector<glm::vec3> vertices; 
-    ofPolyline line;
 };
 

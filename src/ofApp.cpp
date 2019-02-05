@@ -4,8 +4,8 @@
 void ofApp::setup(){
   ofBackground(0);
   
-  numAgents = 20;
   hideObstructions = false;
+  grabberDebug = true;
   
   ofSetVerticalSync(true);
   ofSetLogLevel(OF_LOG_NOTICE);
@@ -42,27 +42,58 @@ void ofApp::setup(){
   ofAddListener(box2d.contactStartEvents, this, &ofApp::contactStart);
   ofAddListener(box2d.contactEndEvents, this, &ofApp::contactEnd);
   
-  // Load image
+  // Load face textures.
   ofTexture t;
-//  ofLoadImage(t, "smile.png"); textures.push_back(t);
   ofLoadImage(t, "p1.png"); textures.push_back(t);
   ofLoadImage(t, "p2.png"); textures.push_back(t);
   ofLoadImage(t, "p3.png"); textures.push_back(t);
   ofLoadImage(t, "p4.png"); textures.push_back(t);
   ofLoadImage(t, "p5.png"); textures.push_back(t);
   ofLoadImage(t, "p6.png"); textures.push_back(t);
+  
+  // Setup Grabber
+  grabber.setup(500, 500);
+  tracker.setup();
+  takeSnapshot = false;
+  ofSetCircleResolution(30);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
   box2d.update();
+  grabber.update();
+  
+  if (grabber.isFrameNew()) {
+    boundingBoxes.clear();
+    tracker.update(grabber);
+    
+    // Get the bounding boxes.
+    if (tracker.size() > 0){
+      auto& instances = tracker.getInstances();
+      for (auto &i : instances) {
+        auto rect = i.getBoundingBox();
+        boundingBoxes.push_back(rect);
+      }
+    }
+    
+    if (takeSnapshot) {
+      if (boundingBoxes.size() > 0) {
+        ofPixels p = grabber.getPixels();
+        auto r = boundingBoxes[0];
+        p.cropTo(crop, r.x, r.y, r.width, r.height);
+        dst.setFromPixels(crop);
+        createAgent();
+        
+        // Create an agent now that the texture is ready.
+        takeSnapshot = false;
+      }
+    }
+  }
   
   // Update agents. 
   for (auto a : agents) {
     a.update();
   }
-  
-  line.addVertex({ofGetMouseX(), ofGetMouseY(), 0});
 }
 
 //--------------------------------------------------------------
@@ -102,17 +133,31 @@ void ofApp::draw(){
     else ofSetColor(ofColor::white);
     a.draw();
   }
+  
+  if (grabberDebug) {
+    // Face recognition stuff.
+    grabber.draw(0, 0);
+    for (auto& b : boundingBoxes) {
+      ofPushStyle();
+        ofNoFill();
+        ofSetColor(ofColor::red);
+        ofDrawRectangle(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+      ofPopStyle();
+    }
+    
+    // Draw destination image.
+    if (dst.getTexture().isAllocated()) {
+      dst.draw(0, 0);
+    }
+  }
 }
 
-void ofApp::createAgents() {
-  // Initialize agents. 
-  for (int i = 0; i < numAgents; i++) {
-    glm::vec2 pos = glm::vec2(bounds.x + ofRandom(bounds.width), bounds.y);
-    int soundId = ofRandom(0, sounds.size());
-    int texId = ofRandom(0, textures.size());
-    Agent agent(&box2d, pos, soundId, textures[texId]);
-    agents.push_back(agent);
-  }
+void ofApp::createAgent() {
+  glm::vec2 pos = glm::vec2(bounds.x + ofRandom(bounds.width), bounds.y);
+  int soundId = ofRandom(0, sounds.size());
+  int texId = ofRandom(0, textures.size());
+  Agent agent(&box2d, pos, soundId, dst);
+  agents.push_back(agent);
 }
 
 void ofApp::createObstructions() {
@@ -160,8 +205,8 @@ void ofApp::createObstructions() {
   rectangles.push_back(c);
   
   // Some panel
-  glm::vec2 panelPos = glm::vec2(bounds.x + 200, bounds.y + 200);
-  ofRectangle panel = ofRectangle(panelPos, 75, 20);
+  glm::vec2 panelPos = glm::vec2(bounds.x + 280, bounds.y + 152);
+  ofRectangle panel = ofRectangle(panelPos, 200, 20);
   c = std::make_shared<ofxBox2dRect>();
   c->setPhysics(0.0, 0.7, 0.1); // Density, bounce, and friction.
   c->setup(box2d.getWorld(), panel);
@@ -169,7 +214,7 @@ void ofApp::createObstructions() {
   sd = (SoundData*)c->getData();
   sd->soundID = -1;
   sd->bHit = false;
-  sd->rotation = 55; // Degrees
+  sd->rotation = 42; // Degrees
   rectangles.push_back(c);
 }
 
@@ -220,7 +265,7 @@ void ofApp::contactEnd(ofxBox2dContactArgs &e) {
 void ofApp::keyPressed(int key){
   // When space bar is pressed, create bunch of circles to fall from the top.
   if (key == 'c') {
-    createAgents();
+    createAgent();
   }
   
   if (key == 'o') {
@@ -229,5 +274,13 @@ void ofApp::keyPressed(int key){
   
   if (key == 'h') {
     hideObstructions = !hideObstructions;
+  }
+  
+  if (key == 's') {
+    takeSnapshot = true;
+  }
+  
+  if (key == 'd') {
+    grabberDebug = !grabberDebug;
   }
 }
