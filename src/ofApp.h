@@ -41,9 +41,6 @@ class ofApp : public ofBaseApp{
     void contactPostSolve(ofxBox2dPostSolveArgs& e);
     void contactEnd(ofxBox2dContactArgs &e);
   
-    // Array of textures. 
-    std::vector<ofTexture> textures;
-  
     // Camera
     ofVideoGrabber grabber;
     ofxFaceTracker2 tracker;

@@ -42,15 +42,6 @@ void ofApp::setup(){
   ofAddListener(box2d.contactStartEvents, this, &ofApp::contactStart);
   ofAddListener(box2d.contactEndEvents, this, &ofApp::contactEnd);
   
-  // Load face textures.
-  ofTexture t;
-  ofLoadImage(t, "p1.png"); textures.push_back(t);
-  ofLoadImage(t, "p2.png"); textures.push_back(t);
-  ofLoadImage(t, "p3.png"); textures.push_back(t);
-  ofLoadImage(t, "p4.png"); textures.push_back(t);
-  ofLoadImage(t, "p5.png"); textures.push_back(t);
-  ofLoadImage(t, "p6.png"); textures.push_back(t);
-  
   // Setup Grabber
   grabber.setup(500, 500);
   tracker.setup();
@@ -155,7 +146,6 @@ void ofApp::draw(){
 void ofApp::createAgent() {
   glm::vec2 pos = glm::vec2(bounds.x + ofRandom(bounds.width), bounds.y);
   int soundId = ofRandom(0, sounds.size());
-  int texId = ofRandom(0, textures.size());
   Agent agent(&box2d, pos, soundId, dst);
   agents.push_back(agent);
 }
