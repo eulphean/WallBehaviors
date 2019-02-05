@@ -1,21 +1,34 @@
 #pragma once
 #include "ofMain.h"
 #include "ofxBox2d.h"
-#include "SoundData.h"
+#include "Agent.h"
 
-class Agent {
+class DebugParameters {
+  public:
+    bool hideObstructions;
+}
+
+class World {
 
 	public:
-    Agent(ofxBox2d * box2d, glm::vec2 bounds, int soundId, ofTexture tex);
-    SoundData* getData();
-    ofTexture tex; 
+    // World
+    ofxBox2d box2d;
+    // Bounds.
+    ofRectangle bounds;
+    // Agents.
+    std::vector<Agent> agents;
+    // Obstructions
+    std::vector<std::shared_ptr<ofxBox2dRect>> rectangles;
   
-		void update();
-		void draw();
+    World();
+    void update();
+    void draw(DebugParamaters params);
+    void createAgent(ofImage &img);
+    void createObstructions();
   
-    // Box2D object. 
-    std::shared_ptr<ofxBox2dCircle> obj;
-    std::vector<glm::vec3> vertices; 
-    ofPolyline line;
+    // Contact listening callbacks.
+    void contactStart(ofxBox2dContactArgs &e);
+    void contactEnd(ofxBox2dContactArgs &e);
+  
 };
 
