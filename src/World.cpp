@@ -2,7 +2,9 @@
 
 #include "World.h"
 
-World::World() {
+World::World() {}
+
+void World::setup() {
   // Initialize box 2d.
   box2d.init();
   box2d.enableEvents();
@@ -22,6 +24,17 @@ World::World() {
   ofAddListener(box2d.contactStartEvents, this, &World::contactStart);
   ofAddListener(box2d.contactEndEvents, this, &World::contactEnd);
   
+  // Load sounds.
+  ofDirectory directory("sfx/");
+  directory.allowExt("mp3");
+  for (auto file: directory)
+  {
+      auto sound = std::make_shared<ofSoundPlayer>();
+      sound->load(file);
+      sound->setMultiPlay(true);
+      sound->setLoop(false);
+      sounds.push_back(sound);
+  }
 }
 
 void World::update() {
@@ -35,7 +48,7 @@ void World::update() {
 
 void World::draw(DebugParameters params) {
   // Draw the bounds.
-  ofSetColor(ofColor::white);
+  ofSetColor(119, 118, 135);
   ofFill();
   ofSetLineWidth(3.0);
   ofDrawRectangle(bounds);
@@ -71,7 +84,7 @@ void World::draw(DebugParameters params) {
   }
 }
 
-void World::createAgent(ofImage &img) {
+void World::createAgent(ofImage img) {
   glm::vec2 pos = glm::vec2(bounds.x + ofRandom(bounds.width), bounds.y);
   int soundId = ofRandom(0, sounds.size());
   Agent agent(&box2d, pos, soundId, img);

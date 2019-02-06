@@ -22,9 +22,6 @@ class ofApp : public ofBaseApp{
     World world;
     DebugParameters params; 
   
-    // Sounds
-    std::vector<std::shared_ptr<ofSoundPlayer>> sounds;
-  
     // Camera
     ofVideoGrabber grabber;
     ofxFaceTracker2 tracker;

@@ -11,18 +11,9 @@ void ofApp::setup(){
   
   ofSetVerticalSync(true);
   ofSetLogLevel(OF_LOG_NOTICE);
-
-  // Load sounds.
-  ofDirectory directory("sfx/");
-  directory.allowExt("mp3");
-  for (auto file: directory)
-  {
-      auto sound = std::make_shared<ofSoundPlayer>();
-      sound->load(file);
-      sound->setMultiPlay(true);
-      sound->setLoop(false);
-      sounds.push_back(sound);
-  }
+  
+  // Setup world
+  world.setup();
   
   // Setup Grabber
   grabber.setup(500, 500);
@@ -56,7 +47,7 @@ void ofApp::update(){
         auto r = boundingBoxes[0];
         p.cropTo(crop, r.x, r.y, r.width, r.height);
         dst.setFromPixels(crop);
-        world.createAgent(&dst);
+        world.createAgent(dst);
         
         // Create an agent now that the texture is ready.
         takeSnapshot = false;
@@ -68,6 +59,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   // Draw world
+  world.draw(params);
   
   if (grabberDebug) {
     // Face recognition stuff.

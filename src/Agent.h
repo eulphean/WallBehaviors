@@ -6,7 +6,7 @@
 class Agent {
 
 	public:
-    Agent(ofxBox2d * box2d, glm::vec2 bounds, int soundId, ofImage &img);
+    Agent(ofxBox2d * box2d, glm::vec2 bounds, int soundId, ofImage img);
     SoundData* getData();
     ofImage agentImg;
     ofFbo masker; 

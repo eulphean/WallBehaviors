@@ -2,11 +2,12 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "Agent.h"
+#include "SoundData.h"
 
 class DebugParameters {
   public:
     bool hideObstructions;
-}
+};
 
 class World {
 
@@ -19,11 +20,13 @@ class World {
     std::vector<Agent> agents;
     // Obstructions
     std::vector<std::shared_ptr<ofxBox2dRect>> rectangles;
+    std::vector<std::shared_ptr<ofSoundPlayer>> sounds; 
   
     World();
+    void setup();
     void update();
-    void draw(DebugParamaters params);
-    void createAgent(ofImage &img);
+    void draw(DebugParameters params);
+    void createAgent(ofImage img);
     void createObstructions();
   
     // Contact listening callbacks.

@@ -2,7 +2,7 @@
 
 #include "Agent.h"
 
-Agent::Agent(ofxBox2d * box2d, glm::vec2 pos, int soundId, ofImage &img) {
+Agent::Agent(ofxBox2d * box2d, glm::vec2 pos, int soundId, ofImage img) {
   obj = std::make_shared<ofxBox2dCircle>();
   float rad = ofRandom(30, 50);
 
@@ -17,7 +17,7 @@ Agent::Agent(ofxBox2d * box2d, glm::vec2 pos, int soundId, ofImage &img) {
   sd->bHit = false;
   
   // Allocate
-  agentImg = (*img);
+  agentImg = img; 
 
   // Prepare mask.
   masker.allocate(agentImg.getWidth(), agentImg.getHeight(), GL_RGBA);
