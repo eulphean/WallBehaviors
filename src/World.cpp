@@ -35,6 +35,10 @@ void World::setup() {
       sound->setLoop(false);
       sounds.push_back(sound);
   }
+  
+  // Create obstructions
+  createShelf();
+  createPlanks();
 }
 
 void World::update() {
@@ -91,7 +95,7 @@ void World::createAgent(ofImage img) {
   agents.push_back(agent);
 }
 
-void World::createObstructions() {
+void World::createShelf() {
   // Shelf shape.
   int sizeX = 247; int sizeY = 15;
   glm::vec2 pos = glm::vec2(ofGetWidth()/2, ofGetHeight()/2 - 43);
@@ -102,8 +106,6 @@ void World::createObstructions() {
   glm::vec2 rightPos = glm::vec2(pos.x + sizeX/2 - 31, pos.y + sizeY/2 + 25);
   ofRectangle leftJoint = ofRectangle(leftPos, 13, 58);
   ofRectangle rightJoint = ofRectangle(rightPos, 13, 58);
-  
-  // CREATE A SHELF.
   
   // Top base
   auto c = std::make_shared<ofxBox2dRect>();
@@ -134,18 +136,56 @@ void World::createObstructions() {
   sd->soundID = -1;
   sd->bHit = false;
   rectangles.push_back(c);
+}
+
+void World::createPlanks() {
+  auto c = std::make_shared<ofxBox2dRect>();
+  glm::vec2 pos; glm::vec2 size; int rotation;
   
-  // Some panel
-  glm::vec2 panelPos = glm::vec2(bounds.x + 280, bounds.y + 152);
-  ofRectangle panel = ofRectangle(panelPos, 200, 20);
+  // Panel 1
+  pos = glm::vec2(bounds.x + 280, bounds.y + 152);
+  size = glm::vec2(200, 20);
+  rotation = 42;
+  createPanel(pos, size, rotation);
+
+  // Panel 2
+  pos = glm::vec2(bounds.x + 815, bounds.y + 365);
+  size = glm::vec2(375, 40);
+  rotation = 130;
+  createPanel(pos, size, rotation);
+  
+  
+  // Panel 3
+  pos = glm::vec2(bounds.x + 672, bounds.y + 825);
+  size = glm::vec2(277, 15);
+  rotation = 40;
+  createPanel(pos, size, rotation);
+  
+  // Panel 4
+  pos = glm::vec2(bounds.x + 273, bounds.y + 775);
+  size = glm::vec2(275, 15);
+  rotation = 140;
+  createPanel(pos, size, rotation);
+  
+  // Panel 5
+  pos = glm::vec2(bounds.x + 460, bounds.y + 1010);
+  size = glm::vec2(380, 35);
+  rotation = 0;
+  createPanel(pos, size, rotation);
+}
+
+void World::createPanel(glm::vec2 panelPos, glm::vec2 size, int rotation) {
+  auto c = std::make_shared<ofxBox2dRect>();
+  
+  ofRectangle panel = ofRectangle(panelPos, size.x, size.y);
   c = std::make_shared<ofxBox2dRect>();
   c->setPhysics(0.0, 0.7, 0.1); // Density, bounce, and friction.
   c->setup(box2d.getWorld(), panel);
   c->setData(new SoundData());
-  sd = (SoundData*)c->getData();
+  SoundData * sd = (SoundData*)c->getData();
   sd->soundID = -1;
   sd->bHit = false;
-  sd->rotation = 42; // Degrees
+  sd->rotation = rotation; // Degrees
   rectangles.push_back(c);
 }
 

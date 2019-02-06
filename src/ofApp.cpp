@@ -81,10 +81,6 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-  if (key == 'o') {
-    world.createObstructions();
-  }
-  
   if (key == 'h') {
     params.hideObstructions = !params.hideObstructions;
   }

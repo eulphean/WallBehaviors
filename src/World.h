@@ -27,7 +27,9 @@ class World {
     void update();
     void draw(DebugParameters params);
     void createAgent(ofImage img);
-    void createObstructions();
+    void createShelf();
+    void createPlanks();
+    void createPanel(glm::vec2 panelPos, glm::vec2 size, int rotation);
   
     // Contact listening callbacks.
     void contactStart(ofxBox2dContactArgs &e);
