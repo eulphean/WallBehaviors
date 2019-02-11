@@ -34,6 +34,5 @@ class World {
     // Contact listening callbacks.
     void contactStart(ofxBox2dContactArgs &e);
     void contactEnd(ofxBox2dContactArgs &e);
-  
 };
 
