@@ -4,6 +4,20 @@
 void ofApp::setup(){
   ofBackground(0);
   
+  // Setup gui
+  gui.setup();
+  gui.add(faceParams.softCircleRadius.setup("Radius", 18, 2, 50)); // Should be set algorithmically most likely. 
+  gui.add(faceParams.softJointLength.setup("JointLength", 2, 0, 20)); // Should be set algorithmically most likely.
+  gui.add(faceParams.density.setup("Density", 0.5, 0, 1));
+  gui.add(faceParams.bounce.setup("Bounce", 0.5, 0, 1));
+  gui.add(faceParams.friction.setup("Friction", 0.5, 0, 1));
+  gui.add(faceParams.centerJointFrequency.setup("CenterJointFrequency", 4.f, 0.f, 20.f ));
+  gui.add(faceParams.centerJointDamping.setup("CenterJointDamping", 1.f, 0.f, 5.f));
+  gui.add(faceParams.outerJointFrequency.setup("OuterJointFrequency", 1.f, 0.f, 20.f));
+  gui.add(faceParams.outerJointDamping.setup("OuterJointDamping", 1.f, 0.f, 5.f));
+  
+  gui.loadFromFile("wallbehaviors.xml");
+  
   // Initialize world's debug parameters.
   params.hideObstructions = false;
   grabberDebug = true;
@@ -47,7 +61,7 @@ void ofApp::update(){
         auto r = boundingBoxes[0];
         p.cropTo(crop, r.x, r.y, r.width, r.height);
         dst.setFromPixels(crop);
-        world.createAgent(dst);
+        world.createAgent(faceParams, dst);
         
         // Create an agent now that the texture is ready.
         takeSnapshot = false;
@@ -77,6 +91,10 @@ void ofApp::draw(){
       dst.draw(0, 0);
     }
   }
+}
+
+void ofApp::exit() {
+  gui.saveToFile("SoftBodyBox2D.xml");
 }
 
 //--------------------------------------------------------------

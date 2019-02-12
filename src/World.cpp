@@ -88,10 +88,10 @@ void World::draw(DebugParameters params) {
   }
 }
 
-void World::createAgent(ofImage img) {
+void World::createAgent(GuiParams &params, ofImage img) {
   glm::vec2 pos = glm::vec2(bounds.x + ofRandom(bounds.width), bounds.y);
   int soundId = ofRandom(0, sounds.size());
-  Agent agent(&box2d, pos, soundId, img);
+  Agent agent(box2d, params, pos, soundId, img);
   agents.push_back(agent);
 }
 

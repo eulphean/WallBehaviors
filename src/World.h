@@ -3,6 +3,7 @@
 #include "ofxBox2d.h"
 #include "Agent.h"
 #include "SoundData.h"
+#include "GuiParams.h"
 
 class DebugParameters {
   public:
@@ -26,7 +27,7 @@ class World {
     void setup();
     void update();
     void draw(DebugParameters params);
-    void createAgent(ofImage img);
+    void createAgent(GuiParams &params, ofImage img);
     void createShelf();
     void createPlanks();
     void createPanel(glm::vec2 panelPos, glm::vec2 size, int rotation);

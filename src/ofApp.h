@@ -4,6 +4,7 @@
 #include "World.h"
 #include "ofxBox2d.h"
 #include "ofxFaceTracker2.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 
@@ -12,7 +13,7 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
     void keyPressed(int key);
-  
+    void exit();
   
     // Flags
     bool grabberDebug;
@@ -28,4 +29,8 @@ class ofApp : public ofBaseApp{
     std::vector<ofRectangle> boundingBoxes;
     ofPixels crop;
     ofImage dst;
+  
+    // GUI
+    ofxPanel gui;
+    GuiParams faceParams; 
 };
