@@ -64,6 +64,7 @@ void ofApp::update(){
         auto r = boundingBoxes[0];
         p.cropTo(crop, r.x, r.y, r.width, r.height);
         dst.setFromPixels(crop);
+        dst.resize(crop.getWidth()/2, crop.getHeight()/2);
         world.createAgent(faceParams, dst);
         
         // Create an agent now that the texture is ready.
