@@ -91,6 +91,8 @@ void ofApp::draw(){
       dst.draw(0, 0);
     }
   }
+  
+  gui.draw();
 }
 
 void ofApp::exit() {

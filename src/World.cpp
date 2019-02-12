@@ -81,9 +81,10 @@ void World::draw(DebugParameters params) {
   ofFill();
   for (auto a : agents) {
     ofFill();
-    SoundData * data = a.getData();
-    if(data && data->bHit) ofSetHexColor(0xff0000);
-    else ofSetColor(ofColor::white);
+//    SoundData * data = a.getData();
+//    if(data && data->bHit) ofSetHexColor(0xff0000);
+//    else ofSetColor(ofColor::white);
+    ofSetColor(ofColor::white);
     a.draw();
   }
 }

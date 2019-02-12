@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <group>
 	<Radius>18</Radius>
-	<JointLength>2</JointLength>
+	<JointLength>15.3</JointLength>
 	<Density>0.5</Density>
 	<Bounce>0.5</Bounce>
 	<Friction>0.5</Friction>

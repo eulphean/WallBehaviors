@@ -23,5 +23,5 @@ class Face {
     void updateFaceMeshVertices();
     void updateFaceMeshTexture();
     void updateFaceMeshPlane();
-    void draw(ofVideoGrabber &grabber, bool showMesh, bool showTexture, bool showSoftBody);
+    void draw(ofImage img, bool showMesh, bool showTexture, bool showSoftBody);
 };

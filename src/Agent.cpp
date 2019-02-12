@@ -9,7 +9,6 @@ Agent::Agent(ofxBox2d &box2d, GuiParams &params, glm::vec2 pos, int soundId, ofI
   face.createFaceMesh(r, params);
   face.createFaceBox2DSprings(box2d, params); // Create the soft body. Pass all GUI physics parameters.
   
-  
 //  obj = std::make_shared<ofxBox2dCircle>();
 //  float rad = ofRandom(30, 50);
 //
@@ -38,27 +37,28 @@ Agent::Agent(ofxBox2d &box2d, GuiParams &params, glm::vec2 pos, int soundId, ofI
 
 void Agent::update() {
   // Update face.
-  obj->addForce(glm::vec2(ofRandom(-25, 25), ofRandom(-25, 25)), 11.0);
-  auto pos = obj->getPosition();
+  // obj->addForce(glm::vec2(ofRandom(-25, 25), ofRandom(-25, 25)), 11.0);
+  //auto pos = obj->getPosition();
+  face.updateFaceMeshPlane();
 }
 
 void Agent::draw() {
   // Draw face.
+  face.draw(agentImg, true, true, true);
   
-  
-  auto pos = obj->getPosition();
-  auto rot = obj->getRotation();
-  ofPushMatrix();
-    ofTranslate(pos);
-      ofRotate(rot);
-        float width = obj -> getRadius() * 2;
-        float height = width;
-        float x = - width/2;
-        float y = - height/2;
-        // Keep masking.
-        agentImg.getTexture().setAlphaMask(masker.getTexture());
-        agentImg.getTexture().draw(x, y, width, height);
-  ofPopMatrix();
+//  auto pos = obj->getPosition();
+//  auto rot = obj->getRotation();
+//  ofPushMatrix();
+//    ofTranslate(pos);
+//      ofRotate(rot);
+//        float width = obj -> getRadius() * 2;
+//        float height = width;
+//        float x = - width/2;
+//        float y = - height/2;
+//        // Keep masking.
+//        agentImg.getTexture().setAlphaMask(masker.getTexture());
+//        agentImg.getTexture().draw(x, y, width, height);
+//  ofPopMatrix();
 }
 
 SoundData* Agent::getData() {

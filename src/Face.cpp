@@ -125,7 +125,7 @@ void Face::updateFaceMeshPlane() {
   }
 }
 
-void Face::draw(ofVideoGrabber &grabber, bool showMesh, bool showTexture, bool showSoftBody) {
+void Face::draw(ofImage img, bool showMesh, bool showTexture, bool showSoftBody) {
   // Show just the mesh with
   if (showMesh) {
     if (faceMesh.getVertices().size() > 0) {
@@ -133,13 +133,13 @@ void Face::draw(ofVideoGrabber &grabber, bool showMesh, bool showTexture, bool s
           ofSetColor(ofColor::white);
           ofPushMatrix();
             //ofTranslate(ofGetWidth()/2 - rect.getWidth()/2, ofGetHeight()/2 - rect.getHeight()/2);
-            grabber.getTexture().bind();
+            img.getTexture().bind();
               if (showTexture) {
                 faceMesh.draw();
               } else {
                 faceMesh.drawWireframe();
               }
-            grabber.getTexture().unbind();
+            img.getTexture().unbind();
           ofPopMatrix();
         ofPopStyle();
     }
