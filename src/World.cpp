@@ -8,7 +8,7 @@ void World::setup() {
   // Initialize box 2d.
   box2d.init();
   box2d.enableEvents();
-  box2d.setGravity(0, 0);
+  box2d.setGravity(0, 1);
   box2d.setFPS(60.0);
   
   // Not sure what this is for right now.
@@ -45,7 +45,7 @@ void World::update() {
   box2d.update();
   
   // Update agents.
-  for (auto a : agents) {
+  for (auto &a : agents) {
     a.update();
   }
 }
@@ -85,12 +85,13 @@ void World::draw(DebugParameters params) {
 //    if(data && data->bHit) ofSetHexColor(0xff0000);
 //    else ofSetColor(ofColor::white);
     ofSetColor(ofColor::white);
-    a.draw();
+    a.draw(params);
   }
 }
 
 void World::createAgent(GuiParams &params, ofImage img) {
-  glm::vec2 pos = glm::vec2(bounds.x + ofRandom(bounds.width), bounds.y);
+  glm::vec2 pos = glm::vec2(bounds.x + bounds.width/2, bounds.y + img.getHeight());
+  //glm::vec2 pos = glm::vec2(bounds.x + ofRandom(bounds.width), bounds.y);
   int soundId = ofRandom(0, sounds.size());
   Agent agent(box2d, params, pos, soundId, img);
   agents.push_back(agent);

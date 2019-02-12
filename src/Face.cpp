@@ -3,7 +3,7 @@
 #include "Face.h"
 
 // Send new radius.
-void Face::createFaceMesh(ofRectangle r, GuiParams &params) {
+void Face::createFaceMesh(ofRectangle r, glm::vec2 pos, GuiParams &params) {
   // Clear the mesh.
   faceMesh.clear();
 
@@ -23,7 +23,8 @@ void Face::createFaceMesh(ofRectangle r, GuiParams &params) {
 
   // Start creating a face randomly on the screen.
   //glm::vec3 center = glm::vec3(ofGetWidth()/2, ofGetHeight()/2, 0);
-  glm::vec3 center = glm::vec3(ofRandom(faceMeshRadius, ofGetWidth() - faceMeshRadius), ofRandom(faceMeshRadius, ofGetHeight() - faceMeshRadius), 0);
+  //glm::vec3 center = glm::vec3(ofRandom(faceMeshRadius, ofGetWidth() - faceMeshRadius), ofRandom(faceMeshRadius, ofGetHeight() - faceMeshRadius), 0);
+  glm::vec3 center = glm::vec3(pos.x, pos.y, 0);
   faceMesh.addVertex(center);
 
   // Center vertex of the texture (ie. the center of the bounding rectangle for the texture)

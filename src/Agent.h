@@ -1,9 +1,8 @@
 #pragma once
 #include "ofMain.h"
 #include "ofxBox2d.h"
-#include "SoundData.h"
 #include "Face.h"
-#include "GuiParams.h"
+#include "Global.h"
 
 class Agent {
 
@@ -14,7 +13,7 @@ class Agent {
     ofFbo masker; 
   
 		void update();
-		void draw();
+		void draw(DebugParameters params);
   
     // Box2D object. 
     std::shared_ptr<ofxBox2dCircle> obj;

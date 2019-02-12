@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxBox2d.h"
-#include "GuiParams.h"
+#include "Global.h"
 
 #pragma once
 
@@ -18,7 +18,7 @@ class Face {
     float faceCircumference;
   
   public:
-    void createFaceMesh(ofRectangle boundingRect, GuiParams &params);
+    void createFaceMesh(ofRectangle boundingRect, glm::vec2 pos, GuiParams &params);
     void createFaceBox2DSprings(ofxBox2d &box2d, GuiParams &params);
     void updateFaceMeshVertices();
     void updateFaceMeshTexture();

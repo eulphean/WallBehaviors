@@ -6,7 +6,7 @@ Agent::Agent(ofxBox2d &box2d, GuiParams &params, glm::vec2 pos, int soundId, ofI
   ofRectangle r;
   r.width = img.getWidth(); r.height = img.getHeight();
   
-  face.createFaceMesh(r, params);
+  face.createFaceMesh(r, pos, params);
   face.createFaceBox2DSprings(box2d, params); // Create the soft body. Pass all GUI physics parameters.
   
 //  obj = std::make_shared<ofxBox2dCircle>();
@@ -42,9 +42,9 @@ void Agent::update() {
   face.updateFaceMeshPlane();
 }
 
-void Agent::draw() {
+void Agent::draw(DebugParameters params) {
   // Draw face.
-  face.draw(agentImg, true, true, true);
+  face.draw(agentImg, params.showMesh, params.showTexture, params.showSoftBody);
   
 //  auto pos = obj->getPosition();
 //  auto rot = obj->getRotation();

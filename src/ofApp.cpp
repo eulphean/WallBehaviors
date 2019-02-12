@@ -20,6 +20,9 @@ void ofApp::setup(){
   
   // Initialize world's debug parameters.
   params.hideObstructions = false;
+  params.showMesh = true;
+  params.showTexture = true;
+  params.showSoftBody = false;
   grabberDebug = true;
   takeSnapshot = false;
   
@@ -96,7 +99,7 @@ void ofApp::draw(){
 }
 
 void ofApp::exit() {
-  gui.saveToFile("SoftBodyBox2D.xml");
+  gui.saveToFile("wallbehaviors.xml");
 }
 
 //--------------------------------------------------------------
@@ -111,5 +114,17 @@ void ofApp::keyPressed(int key){
   
   if (key == 'd') {
     grabberDebug = !grabberDebug;
+  }
+  
+  if (key == 'm') {
+    params.showMesh = !params.showMesh;
+  }
+  
+  if (key == 't') {
+    params.showTexture = !params.showTexture;
+  }
+  
+  if (key == 'b') {
+    params.showSoftBody = !params.showSoftBody;
   }
 }

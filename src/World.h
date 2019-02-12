@@ -2,13 +2,7 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "Agent.h"
-#include "SoundData.h"
-#include "GuiParams.h"
-
-class DebugParameters {
-  public:
-    bool hideObstructions;
-};
+#include "Global.h"
 
 class World {
 
