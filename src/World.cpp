@@ -8,7 +8,7 @@ void World::setup() {
   // Initialize box 2d.
   box2d.init();
   box2d.enableEvents();
-  box2d.setGravity(0, 1);
+  box2d.setGravity(0, 0);
   box2d.setFPS(60.0);
   
   // Not sure what this is for right now.
