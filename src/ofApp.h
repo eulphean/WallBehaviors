@@ -32,5 +32,7 @@ class ofApp : public ofBaseApp{
   
     // GUI
     ofxPanel gui;
-    GuiParams faceParams; 
+    GuiParams faceParams;
+  
+    long curTime; 
 };

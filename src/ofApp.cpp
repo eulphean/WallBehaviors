@@ -36,6 +36,8 @@ void ofApp::setup(){
   grabber.setup(500, 500);
   tracker.setup();
   ofSetCircleResolution(30);
+  
+  curTime = ofGetElapsedTimeMillis();
 }
 
 //--------------------------------------------------------------
@@ -43,6 +45,8 @@ void ofApp::update(){
   // update World
   world.update();
   
+  grabber.listDevices();
+  grabber.setDeviceID(1);
   grabber.update();
   
   if (grabber.isFrameNew()) {
@@ -58,17 +62,18 @@ void ofApp::update(){
       }
     }
     
-    if (takeSnapshot) {
+    auto elapsedTime = ofGetElapsedTimeMillis() - curTime;
+    if (elapsedTime > 3000) {
       if (boundingBoxes.size() > 0) {
-        ofPixels p = grabber.getPixels();
-        auto r = boundingBoxes[0];
-        p.cropTo(crop, r.x, r.y, r.width, r.height);
-        dst.setFromPixels(crop);
-        dst.resize(crop.getWidth()/2, crop.getHeight()/2);
-        world.createAgent(faceParams, dst);
-        
-        // Create an agent now that the texture is ready.
-        takeSnapshot = false;
+        // Go through all the bounding boxes and create agents. 
+        for (auto r : boundingBoxes) {
+          ofPixels p = grabber.getPixels();
+          p.cropTo(crop, r.x, r.y, r.width, r.height);
+          dst.setFromPixels(crop);
+          dst.resize(crop.getWidth()/2, crop.getHeight()/2);
+          world.createAgent(faceParams, dst);
+          curTime = ofGetElapsedTimeMillis();
+        }
       }
     }
   }
