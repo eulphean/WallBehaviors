@@ -65,7 +65,7 @@ void ofApp::update(){
     auto elapsedTime = ofGetElapsedTimeMillis() - curTime;
     if (elapsedTime > 3000) {
       if (boundingBoxes.size() > 0) {
-        // Go through all the bounding boxes and create agents. 
+        // Go through all the bounding boxes and create agents.
         for (auto r : boundingBoxes) {
           ofPixels p = grabber.getPixels();
           p.cropTo(crop, r.x, r.y, r.width, r.height);
