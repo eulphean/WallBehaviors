@@ -63,7 +63,7 @@ void ofApp::update(){
     }
     
     auto elapsedTime = ofGetElapsedTimeMillis() - curTime;
-    if (elapsedTime > 3000) {
+    if (elapsedTime > 1000) {
       if (boundingBoxes.size() > 0) {
         // Go through all the bounding boxes and create agents.
         for (auto r : boundingBoxes) {

@@ -127,7 +127,7 @@ void Face::updateFaceMeshPlane() {
   
   // Add a random force on 0th circle of the face to move
   // it around
-  circles[0]->addForce(glm::vec2(ofRandom(-25, 25), ofRandom(-25, 25)), 5.0);
+  circles[0]->addForce(glm::vec2(ofRandom(-25, 25), ofRandom(-25, 25)), 3.0);
 }
 
 void Face::draw(ofImage img, bool showMesh, bool showTexture, bool showSoftBody) {
