@@ -15,7 +15,9 @@ class World {
     std::vector<Agent> agents;
     // Obstructions
     std::vector<std::shared_ptr<ofxBox2dRect>> rectangles;
-    std::vector<std::shared_ptr<ofSoundPlayer>> sounds; 
+    std::vector<std::shared_ptr<ofSoundPlayer>> sounds;
+  
+    glm::vec2 gridUnitSize; 
   
     World();
     void setup();
@@ -24,6 +26,7 @@ class World {
     void createAgent(GuiParams &params, ofImage img);
     void createShelf();
     void createPlanks();
+    void createMaze();
     void createPanel(glm::vec2 panelPos, glm::vec2 size, int rotation);
   
     // Contact listening callbacks.

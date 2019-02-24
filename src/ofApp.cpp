@@ -23,7 +23,7 @@ void ofApp::setup(){
   params.showMesh = true;
   params.showTexture = true;
   params.showSoftBody = false;
-  grabberDebug = true;
+  grabberDebug = false;
   takeSnapshot = false;
   
   ofSetVerticalSync(true);
@@ -33,6 +33,8 @@ void ofApp::setup(){
   world.setup();
   
   // Setup Grabber
+  grabber.listDevices();
+  grabber.setDeviceID(0);
   grabber.setup(500, 500);
   tracker.setup();
   ofSetCircleResolution(30);
@@ -45,8 +47,6 @@ void ofApp::update(){
   // update World
   world.update();
   
-  grabber.listDevices();
-  grabber.setDeviceID(1);
   grabber.update();
   
   if (grabber.isFrameNew()) {
@@ -70,7 +70,8 @@ void ofApp::update(){
           ofPixels p = grabber.getPixels();
           p.cropTo(crop, r.x, r.y, r.width, r.height);
           dst.setFromPixels(crop);
-          dst.resize(crop.getWidth()/2, crop.getHeight()/2);
+          //dst.resize(crop.getWidth()/2, crop.getHeight()/2);
+          dst.resize(60, 60);
           world.createAgent(faceParams, dst);
           curTime = ofGetElapsedTimeMillis();
         }
@@ -101,7 +102,7 @@ void ofApp::draw(){
     }
   }
   
-  gui.draw();
+//  gui.draw();
 }
 
 void ofApp::exit() {

@@ -18,6 +18,11 @@ void World::setup() {
   int sizeX = ofGetWidth()/2; int sizeY = ofGetHeight();
   bounds.x = ofGetWidth()/2 - sizeX/2; bounds.y = ofGetHeight()/2 - sizeY/2;
   bounds.width = sizeX; bounds.height = sizeY;
+  
+  // Maze is divided in a grid of 5x6 (width * height)
+  gridUnitSize.x = bounds.width/5; gridUnitSize.y = bounds.height/6;
+  
+  
   box2d.createBounds(bounds);
   
   // Contact start and contact end
@@ -37,8 +42,9 @@ void World::setup() {
   }
   
   // Create obstructions
-  createShelf();
-  createPlanks();
+  //createShelf();
+  //createPlanks();
+  //createMaze();
 }
 
 void World::update() {
@@ -96,6 +102,93 @@ void World::createAgent(GuiParams &params, ofImage img) {
   int soundId = ofRandom(0, sounds.size());
   Agent agent(box2d, params, pos, soundId, img);
   agents.push_back(agent);
+}
+
+void World::createMaze() {
+  // Maze grid has 5 rows and 6 columns
+  auto c = std::make_shared<ofxBox2dRect>();
+  glm::vec2 pos; glm::vec2 size; int rotation;
+  
+  // Row 1
+  // Panel 1
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2 (bounds.x + gridUnitSize.x/2, bounds.y + gridUnitSize.y * 1);
+  createPanel(pos, size, 0);
+  
+  // Panel 2
+  size = glm::vec2(gridUnitSize.x * 2, 33);
+  pos = glm::vec2 (bounds.x + gridUnitSize.x * 3, bounds.y + gridUnitSize.y * 1);
+  createPanel(pos, size, 0);
+  
+  // Row 2
+  // Panel 1
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 4 + size.y/2, bounds.y + gridUnitSize.y + size.x/2 - size.y/2);
+  createPanel(pos, size, 90);
+  
+  // Panel 2
+  size = glm::vec2(gridUnitSize.x * 2, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 3, bounds.y + gridUnitSize.y * 2 - 21);
+  createPanel(pos, size, 0);
+  
+  // Panel 3
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 4 + gridUnitSize.x/2, bounds.y + gridUnitSize.y * 2 - 21);
+  createPanel(pos, size, 0);
+  
+  // Row 3
+  // Panel 1
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 1 - size.y/2, bounds.y + gridUnitSize.y * 2 + gridUnitSize.x/2);
+  createPanel(pos, size, 90);
+  
+  // Panel 2
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 2 - gridUnitSize.x/2, bounds.y + gridUnitSize.y * 3 - 5);
+  createPanel(pos, size, 0);
+  
+  // Panel 3
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 4 - gridUnitSize.x/2 + size.y, bounds.y + gridUnitSize.y * 3 - 4);
+  createPanel(pos, size, 0);
+  
+  // Row 4
+  // Panel 1
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 1 + gridUnitSize.x/2, bounds.y + gridUnitSize.y * 4 - 26);
+  createPanel(pos, size, 0);
+  
+  // Panel 2
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 2 + size.y/2, bounds.y + gridUnitSize.y * 3 + gridUnitSize.x/2 - size.y/2 - 5);
+  createPanel(pos, size, 90);
+  
+  // Panel 3
+  size = glm::vec2(gridUnitSize.x * 2, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 3 + size.y, bounds.y + gridUnitSize.y * 4 - 26);
+  createPanel(pos, size, 0);
+  
+  // Panel 4
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 4 + size.y + size.y/2, bounds.y + gridUnitSize.y * 4 - gridUnitSize.x/2 - 9);
+  createPanel(pos, size, 90);
+  
+  // Row 5
+  // Panel 1
+  size = glm::vec2(gridUnitSize.x * 2, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 3 + size.y, bounds.y + gridUnitSize.y * 5);
+  createPanel(pos, size, 0);
+  
+  // Row 6
+  // Panel 1
+  size = glm::vec2(gridUnitSize.x * 2, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x - size.y/2, bounds.y + gridUnitSize.y * 5 - size.y + 2);
+  createPanel(pos, size, 90);
+  
+  // Panel 2
+  size = glm::vec2(gridUnitSize.x, 33);
+  pos = glm::vec2(bounds.x + gridUnitSize.x * 2 + size.y/2, bounds.y + gridUnitSize.y * 5 + gridUnitSize.x/2 - size.y/2);
+  createPanel(pos, size, 90);
 }
 
 void World::createShelf() {
