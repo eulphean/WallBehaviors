@@ -6,7 +6,7 @@ void ofApp::setup(){
   
   // Setup gui
   gui.setup();
-  gui.add(faceParams.softCircleRadius.setup("Radius", 18, 2, 50)); // Should be set algorithmically most likely. 
+  gui.add(faceParams.softCircleRadius.setup("Radius", 18, 0.5, 50)); // Should be set algorithmically most likely. 
   gui.add(faceParams.softJointLength.setup("JointLength", 2, 0, 20)); // Should be set algorithmically most likely.
   gui.add(faceParams.density.setup("Density", 0.5, 0, 1));
   gui.add(faceParams.bounce.setup("Bounce", 0.5, 0, 1));
@@ -64,7 +64,7 @@ void ofApp::update(){
     }
     
     auto elapsedTime = ofGetElapsedTimeMillis() - curTime;
-    if (elapsedTime > 1000) {
+    if (elapsedTime > 1000 && takeSnapshot){
       if (boundingBoxes.size() > 0) {
         // Go through all the bounding boxes and create agents.
         for (auto r : boundingBoxes) {
@@ -72,7 +72,7 @@ void ofApp::update(){
           p.cropTo(crop, r.x, r.y, r.width, r.height);
           dst.setFromPixels(crop);
           //dst.resize(crop.getWidth()/2, crop.getHeight()/2);
-          dst.resize(60, 60);
+          dst.resize(80, 80);
           world.createAgent(faceParams, dst);
           curTime = ofGetElapsedTimeMillis();
         }
@@ -119,7 +119,7 @@ void ofApp::keyPressed(int key){
   }
   
   if (key == 's') {
-    takeSnapshot = true;
+    takeSnapshot = !takeSnapshot;
   }
   
   if (key == 'd') {

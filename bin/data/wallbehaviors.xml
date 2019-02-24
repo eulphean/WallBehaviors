@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <group>
-	<Radius>3.92</Radius>
-	<JointLength>4.3</JointLength>
-	<Density>0.09</Density>
+	<Radius>4</Radius>
+	<JointLength>20</JointLength>
+	<Density>0.57</Density>
 	<Bounce>0.795</Bounce>
 	<Friction>0</Friction>
 	<CenterJointFrequency>12</CenterJointFrequency>

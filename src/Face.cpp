@@ -69,7 +69,13 @@ void Face::createFaceBox2DSprings(ofxBox2d &box2d, GuiParams &params) {
   for (int i = 0; i < meshPoints - 1; i++) {
     auto circle = std::make_shared<ofxBox2dCircle>();
     circle -> setPhysics(params.bounce, params.density, params.friction); // bounce, density, friction
-    circle -> setup(box2d.getWorld(), vertices[i].x, vertices[i].y, params.softCircleRadius);
+    
+    if (i == 0) {
+      circle -> setup(box2d.getWorld(), vertices[i].x, vertices[i].y, 5);
+    } else {
+      circle -> setup(box2d.getWorld(), vertices[i].x, vertices[i].y, params.softCircleRadius);
+    }
+
     circles.push_back(circle);
   }
   
@@ -80,7 +86,7 @@ void Face::createFaceBox2DSprings(ofxBox2d &box2d, GuiParams &params) {
   for(auto i=1; i<circles.size(); i++) {
     auto joint = std::make_shared<ofxBox2dJoint>();
     joint -> setup(box2d.getWorld(), circles[0] -> body, circles[i] -> body, params.centerJointFrequency, params.centerJointDamping);
-    joint->setLength(ofRandom(faceMeshRadius, faceMeshRadius*2));
+    joint->setLength(faceMeshRadius);
     joints.push_back(joint);
   }
   
@@ -104,7 +110,7 @@ void Face::createFaceBox2DSprings(ofxBox2d &box2d, GuiParams &params) {
     joints.push_back(joint);
     
     // Initial impulse on the body.
-    circles[0]->addImpulseForce({ofRandom(0, 5), ofRandom(-5, 2)}, {1, 1});
+    circles[0]->addImpulseForce({ofRandom(0, 10), ofRandom(-10, 5)}, {1, 1});
   }
 }
 
