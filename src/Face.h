@@ -1,3 +1,6 @@
+// MESH object. This has everything to do with the Box2D spring body that there is to be.
+
+
 #pragma once
 
 #include "ofMain.h"

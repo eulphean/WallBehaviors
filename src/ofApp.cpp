@@ -11,9 +11,9 @@ void ofApp::setup(){
   gui.add(faceParams.density.setup("Density", 0.5, 0, 1));
   gui.add(faceParams.bounce.setup("Bounce", 0.5, 0, 1));
   gui.add(faceParams.friction.setup("Friction", 0.5, 0, 1));
-  gui.add(faceParams.centerJointFrequency.setup("CenterJointFrequency", 4.f, 0.f, 20.f ));
+  gui.add(faceParams.centerJointFrequency.setup("CenterJointFrequency", 4.f, 0.f, 100.f ));
   gui.add(faceParams.centerJointDamping.setup("CenterJointDamping", 1.f, 0.f, 5.f));
-  gui.add(faceParams.outerJointFrequency.setup("OuterJointFrequency", 1.f, 0.f, 20.f));
+  gui.add(faceParams.outerJointFrequency.setup("OuterJointFrequency", 1.f, 0.f, 100.f));
   gui.add(faceParams.outerJointDamping.setup("OuterJointDamping", 1.f, 0.f, 5.f));
   
   gui.loadFromFile("wallbehaviors.xml");
@@ -25,6 +25,7 @@ void ofApp::setup(){
   params.showSoftBody = false;
   grabberDebug = false;
   takeSnapshot = false;
+  showDebug = true;
   
   ofSetVerticalSync(true);
   ofSetLogLevel(OF_LOG_NOTICE);
@@ -102,7 +103,9 @@ void ofApp::draw(){
     }
   }
   
-//  gui.draw();
+  if (showDebug) {
+    gui.draw();
+  }
 }
 
 void ofApp::exit() {
@@ -133,5 +136,9 @@ void ofApp::keyPressed(int key){
   
   if (key == 'b') {
     params.showSoftBody = !params.showSoftBody;
+  }
+  
+  if (key == 'g') {
+    showDebug = !showDebug;
   }
 }

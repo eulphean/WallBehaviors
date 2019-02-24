@@ -80,7 +80,7 @@ void Face::createFaceBox2DSprings(ofxBox2d &box2d, GuiParams &params) {
   for(auto i=1; i<circles.size(); i++) {
     auto joint = std::make_shared<ofxBox2dJoint>();
     joint -> setup(box2d.getWorld(), circles[0] -> body, circles[i] -> body, params.centerJointFrequency, params.centerJointDamping);
-    joint->setLength(faceMeshRadius);
+    joint->setLength(ofRandom(faceMeshRadius, faceMeshRadius*2));
     joints.push_back(joint);
   }
   
@@ -102,6 +102,9 @@ void Face::createFaceBox2DSprings(ofxBox2d &box2d, GuiParams &params) {
     joint -> setup(box2d.getWorld(), circles[fromIdx] -> body, circles[toIdx] -> body, params.outerJointFrequency, params.outerJointDamping);
     joint->setLength(length);
     joints.push_back(joint);
+    
+    // Initial impulse on the body.
+    circles[0]->addImpulseForce({ofRandom(0, 5), ofRandom(-5, 2)}, {1, 1});
   }
 }
 
@@ -124,10 +127,6 @@ void Face::updateFaceMeshPlane() {
     vertex.y = pos.y;
     faceMesh.setVertex(i, vertex);
   }
-  
-  // Add a random force on 0th circle of the face to move
-  // it around
-  circles[0]->addForce(glm::vec2(ofRandom(-25, 25), ofRandom(-25, 25)), 3.0);
 }
 
 void Face::draw(ofImage img, bool showMesh, bool showTexture, bool showSoftBody) {

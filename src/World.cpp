@@ -15,8 +15,9 @@ void World::setup() {
   box2d.registerGrabbing();
   
   // Create bound.
-  int sizeX = ofGetWidth()/2; int sizeY = ofGetHeight();
-  bounds.x = ofGetWidth()/2 - sizeX/2; bounds.y = ofGetHeight()/2 - sizeY/2;
+  int sizeX = ofGetWidth(); int sizeY = ofGetHeight();
+  //bounds.x = ofGetWidth()/2 - sizeX/2; bounds.y = ofGetHeight()/2 - sizeY/2;
+  bounds.x = 0; bounds.y = 0;
   bounds.width = sizeX; bounds.height = sizeY;
   
   // Maze is divided in a grid of 5x6 (width * height)
@@ -97,8 +98,7 @@ void World::draw(DebugParameters params) {
 
 void World::createAgent(GuiParams &params, ofImage img) {
   //glm::vec2 pos = glm::vec2(bounds.x + bounds.width/2, bounds.y + img.getHeight());
-  float randomX = ofRandom(bounds.x + img.getWidth(), bounds.x + bounds.width - img.getWidth());
-  glm::vec2 pos = glm::vec2(randomX, bounds.y + img.getHeight());
+  glm::vec2 pos = glm::vec2(bounds.x + 50, ofGetHeight() - 50);
   int soundId = ofRandom(0, sounds.size());
   Agent agent(box2d, params, pos, soundId, img);
   agents.push_back(agent);

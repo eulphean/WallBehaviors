@@ -18,6 +18,7 @@ class ofApp : public ofBaseApp{
     // Flags
     bool grabberDebug;
     bool takeSnapshot;
+    bool showDebug; 
   
     // World
     World world;
